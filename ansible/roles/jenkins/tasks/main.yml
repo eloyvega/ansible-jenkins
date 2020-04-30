@@ -1,0 +1,24 @@
+---
+# tasks file for jenkins
+- name: Add Jenkins repository
+  shell: wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+- name: Import Jenkins GPG key
+  rpm_key:
+    state: present
+    key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+- name: Install Jenkins
+  yum:
+    name: jenkins
+    enablerepo: jenkins
+    state: present
+- name: Add jenkins to docker group
+  user:
+    name: jenkins
+    groups:
+      - docker
+    append: yes
+- name: Start Jenkins
+  service:
+    name: jenkins
+    enabled: yes
+    state: started

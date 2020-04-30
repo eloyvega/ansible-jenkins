@@ -1,0 +1,10 @@
+---
+# tasks file for java
+- name: Removing old version of JAVA from Amazon Linux
+  yum:
+    name: java-1.7.0-openjdk
+    state: absent
+- name: Install specific supported version of JAVA
+  yum:
+    name: java-1.8.0-openjdk
+    state: present

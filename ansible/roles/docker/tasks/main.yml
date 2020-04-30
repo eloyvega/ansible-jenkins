@@ -1,0 +1,20 @@
+---
+# tasks file for docker
+- name: Update packages
+  yum:
+    name: "*"
+    state: latest
+- name: Install Docker
+  command:
+    cmd: amazon-linux-extras install -y docker
+- name: Start Docker
+  service:
+    name: docker
+    enabled: yes
+    state: started
+- name: Add ec2-user to docker group
+  user:
+    name: ec2-user
+    groups:
+      - docker
+    append: yes
